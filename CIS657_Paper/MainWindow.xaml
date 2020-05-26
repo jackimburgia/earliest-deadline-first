@@ -1,0 +1,109 @@
+﻿<Window x:Class="CIS657_Paper.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CIS657_Paper"
+        xmlns:utilities="clr-namespace:CIS657_Paper.Utilities"
+        mc:Ignorable="d"
+        Title="Earliest Deadline First  - CIS 657" Height="660.663" Width="841">
+    <Window.Resources>
+        <utilities:NullableValueConverter x:Key="NullableValueConverter" />
+    </Window.Resources>
+        <StackPanel Margin="0,0,0,100">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="400"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            
+            <GroupBox Header="Tasks" Grid.Column="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0">Cycle Time</TextBlock>
+                    <TextBox x:Name="CycleTime" Grid.Row="0" Grid.Column="1" Text="{Binding NewTask.CycleTime, Mode=TwoWay, Converter={StaticResource NullableValueConverter}}" Width="75"></TextBox>
+                    
+                    <TextBlock Grid.Row="1">Deadline</TextBlock>
+                    <TextBox x:Name="Deadline" Grid.Row="1" Grid.Column="1" Text="{Binding NewTask.Deadline, ValidatesOnExceptions=True,ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource NullableValueConverter}}" Width="75"></TextBox>
+
+                    <TextBlock Grid.Row="2">Processing Time</TextBlock>
+                    <TextBox x:Name="ProcessingTime" Grid.Row="2" Grid.Column="1" Text="{Binding NewTask.ProcessingTime, ValidatesOnExceptions=True,ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource NullableValueConverter}}" Width="75"></TextBox>
+                    
+                    <Button Grid.Row="3" Command="{Binding AddTaskCommand}" Width="100" Grid.ColumnSpan="2">Add New Task</Button> 
+                    
+
+                    <DataGrid Height="200" AutoGenerateColumns="False" ItemsSource="{Binding Tasks}" Grid.Row="4" Grid.ColumnSpan="2" VerticalAlignment="Top">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Task" Binding="{Binding Name}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Cycle Time" Binding="{Binding CycleTime}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Deadline" Binding="{Binding Deadline}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Processing Time" Binding="{Binding ProcessingTime}"></DataGridTextColumn>
+                            <DataGridTextColumn>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding Color}"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>                    
+                </Grid>    
+            </GroupBox>
+
+            <GroupBox Header="Schedule" Grid.Column="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"></ColumnDefinition>
+                        <ColumnDefinition Width="200"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0">LCM</TextBlock>
+                    <TextBox x:Name="LCM" Grid.Column="1" Text="{Binding LCM, ValidatesOnExceptions=True,ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource NullableValueConverter}}" Width="75"></TextBox>
+                    <Button Command="{Binding RunCommand}" Width="75" Grid.Column="2">Run</Button>
+
+
+                    <DataGrid Height="500" ItemsSource="{Binding Schedule}" AutoGenerateColumns="False" Grid.ColumnSpan="3" Grid.Row="1">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Time" Binding="{Binding Time}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="Task" Binding="{Binding Task.Name}"></DataGridTextColumn>
+                            <DataGridTextColumn>
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="{x:Type TextBlock}">
+                                        <Setter Property="Background" Value="{Binding Task.Color}"></Setter>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                        </DataGrid.Columns>
+                    </DataGrid>               
+                </Grid>                
+            </GroupBox>
+
+        </Grid>
+            
+
+        
+        
+        
+
+
+
+
+    </StackPanel>
+</Window>
